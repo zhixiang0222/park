@@ -1,0 +1,20 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: eurekaServer
+  datasource:
+    url: jdbc:mysql://localhost:3306/park?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: 123
+    driver-class-name: com.mysql.jdbc.Driver
+eureka:
+  instance:
+    hostname: localhost
+
+  client:
+    register-with-eureka: false   #不向其他的注册中心去注册服务
+    fetch-registry: false        #不从其他的注册中心拉去服务  注意：注册中心部署为单节点
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka

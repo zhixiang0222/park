@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wisefly.park.mapper.ParkMapper">
+  <resultMap id="BaseResultMap" type="cn.wisefly.park.entity.Park">
+    <id column="cid" jdbcType="INTEGER" property="cid"/>
+    <result column="parking_space" jdbcType="VARCHAR" property="parkingSpace"/>
+    <result column="parking_cost" jdbcType="INTEGER" property="parkingCost"/>
+    <result column="parking_state" jdbcType="INTEGER" property="parkingState"/>
+  </resultMap>
+
+
+  <select id="selectAll" resultType="cn.wisefly.park.entity.Park">
+        SELECT * FROM park
+  </select>
+
+  <select id="selectParkingState" resultType="java.lang.Integer">
+       SELECT count(*) FROM park where parking_state=#{state}
+  </select>
+
+  <select id="getParkByCid" resultType="cn.wisefly.park.entity.Park">
+    SELECT * FROM park where cid=#{cid}
+  </select>
+
+  <update id="updateStateByCid" parameterType="cn.wisefly.park.entity.Park">
+     UPDATE park SET parking_state= #{state} where cid = #{cid}
+  </update>
+
+  <insert id="insertPark" parameterType="cn.wisefly.park.entity.Park">
+    insert into park (cid, parking_space, parking_cost,
+      parking_state)
+    values (#{cid,jdbcType=INTEGER}, #{parkingSpace,jdbcType=VARCHAR}, #{parkingCost,jdbcType=INTEGER},
+      #{parkingState,jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateParkByCid" parameterType="cn.wisefly.park.entity.Park">
+    UPDATE park SET parking_space =#{parkingSpace}, parking_cost =#{parkingCost},parking_state=#{parkingState} where cid = #{cid}
+  </update>
+
+  <delete id="deleteParkByCid" parameterType="java.lang.Integer">
+    delete from park
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+</mapper>
